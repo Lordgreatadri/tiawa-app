@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+  <!-- Chain link — bottom hook (orange) -->
+  <path
+    d="M18.5 13.5a5.5 5.5 0 00-7.778 0L7.5 16.722A5.5 5.5 0 0015.278 24.5l1.514-1.515"
+    stroke="#fb923c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+  />
+  <!-- Chain link — top hook (white) -->
+  <path
+    d="M13.5 18.5a5.5 5.5 0 007.778 0l3.222-3.222A5.5 5.5 0 0016.722 7.5L15.208 9.015"
+    stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+  />
+</svg>
