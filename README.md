@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="../assets/welcome.jpg" alt="Tiawa homepage — URL shortener with instant short link and QR code" width="100%">
+  <img src="./assets/welcome.jpg" alt="Tiawa homepage — URL shortener with instant short link and QR code" width="100%">
 </p>
 
 # Tiawa React App — Smarter Short Links for your business
 
 > The React/Vite frontend for Tiawa: URL shortening, QR codes, and click analytics — consuming the Tiawa REST API.
 
-This directory (`reactapp/`) contains a pixel-faithful React replica of the Tiawa Laravel/Blade UI.
+This app contains a pixel-faithful React replica of the Tiawa UI.
 
 ---
 
@@ -25,12 +25,12 @@ This directory (`reactapp/`) contains a pixel-faithful React replica of the Tiaw
 ## Screenshots
 
 <p align="center">
-  <img src="../assets/welcome.jpg" alt="Tiawa homepage showing a shortened link result with short URL and scannable QR code" width="90%">
+  <img src="./assets/welcome.jpg" alt="Tiawa homepage showing a shortened link result with short URL and scannable QR code" width="90%">
   <br><em>The homepage in action — paste any URL, receive a short link (e.g. <code>tiawa.co/woe8qgf</code>) and a ready-to-scan QR code, no login required.</em>
 </p>
 
 <p align="center">
-  <img src="../assets/use-case.jpg" alt="Tiawa 'Built for real-world campaigns' section showing four use-case cards: Small Businesses, Churches &amp; Events, WhatsApp Campaigns, and Developers &amp; Agencies" width="90%">
+  <img src="./assets/use-case.jpg" alt="Tiawa 'Built for real-world campaigns' section showing four use-case cards: Small Businesses, Churches &amp; Events, WhatsApp Campaigns, and Developers &amp; Agencies" width="90%">
   <br><em>Four audience cards — Small Businesses, Churches &amp; Events, WhatsApp Campaigns, and Developers &amp; Agencies — showing how Tiawa fits every campaign type.</em>
 </p>
 
@@ -57,7 +57,8 @@ cd reactapp
 npm install --legacy-peer-deps
 cp .env.example .env
 # Set VITE_TIAWA_API_URL and VITE_TIAWA_API_KEY in .env
-npm run dev
+npm run dev   --for local. 
+npm run build --for production.
 ```
 
 Visit `http://localhost:5173`.
