@@ -6,6 +6,7 @@ import ApiConsolePage from './pages/ApiConsolePage';
 import BillingPage from './pages/BillingPage';
 import ContactPage from './pages/ContactPage';
 import DashboardPage from './pages/DashboardPage';
+import DeveloperPage from './pages/DeveloperPage';
 import HomePage from './pages/HomePage';
 import LinksPage from './pages/LinksPage';
 import LoginPage from './pages/LoginPage';
@@ -19,6 +20,7 @@ export default function App() {
       <Route path='/login' element={<LoginPage />} />
       <Route path='/register' element={<RegisterPage />} />
       <Route path='/contact' element={<ContactPage />} />
+      <Route path='/developers' element={<DeveloperPage />} />
       <Route
         path='/dashboard'
         element={<ProtectedRoute><DashboardPage /></ProtectedRoute>}

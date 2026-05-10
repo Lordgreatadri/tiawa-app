@@ -24,7 +24,8 @@ apiClient.interceptors.request.use(
     logger.info('API:Request', `${config.method?.toUpperCase()} ${config.url}`, {
       baseURL: config.baseURL,
       params:  config.params,
-      // Do not log request body to avoid leaking sensitive data in prod
+      // Body logged in dev only — never in production
+      ...(import.meta.env.DEV ? { body: config.data } : {}),
     });
 
     // Stamp the request start time so we can compute duration in the response
@@ -47,8 +48,10 @@ apiClient.interceptors.response.use(
       : null;
 
     logger.info('API:Response', `${response.status} ${response.config.url}`, {
-      status:     response.status,
+      status:      response.status,
       duration_ms: ms,
+      // Log full body in dev so business-logic failures (HTTP 200 + status:"Failed") are visible
+      ...(import.meta.env.DEV ? { body: response.data } : {}),
     });
 
     return response;

@@ -103,7 +103,7 @@ const logger = {
 
   /**
    * Export the current log buffer as a downloadable JSON file.
-   * Call from browser console: window.__tiawaLogger.download()
+   * Call from browser console: logger.download()
    */
   download() {
     const blob = new Blob([JSON.stringify(_buffer, null, 2)], { type: 'application/json' });
@@ -127,6 +127,7 @@ const logger = {
 // Expose on window for easy console access during debugging
 if (IS_DEV) {
   window.__tiawaLogger = logger;
+  window.logger = logger;   // shorthand: logger.download(), logger.entries(), logger.clear()
 }
 
 export default logger;

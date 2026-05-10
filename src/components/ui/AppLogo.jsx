@@ -29,7 +29,7 @@ export default function AppLogo({ variant = 'nav' }) {
             <TiawaIcon size={24} />
           </div>
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-white tracking-tight leading-none">Tiawa</span>
+            <span className="text-2xl font-bold text-white tracking-tight leading-none">tiawa.co</span>
             <span className="text-xs font-mono" style={{ color: '#fb923c', letterSpacing: '0.05em' }}>
               tiawa.co
             </span>
@@ -51,7 +51,7 @@ export default function AppLogo({ variant = 'nav' }) {
         >
           <TiawaIcon size={16} />
         </div>
-        <span className="text-lg font-bold text-white">Tiawa</span>
+        <span className="text-lg font-bold text-white">tiawa.co</span>
       </div>
     );
   }
@@ -65,7 +65,7 @@ export default function AppLogo({ variant = 'nav' }) {
       >
         <TiawaIcon size={20} />
       </div>
-      <span className="text-xl font-bold text-white tracking-tight">Tiawa</span>
+      <span className="text-xl font-bold text-white tracking-tight">tiawa.co</span>
     </Link>
   );
 }

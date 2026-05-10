@@ -200,7 +200,7 @@ export default function HomePage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Built for real-world campaigns</h2>
             <p className="text-lg max-w-2xl mx-auto" style={{ color: '#9ca3af' }}>
-              From street-side vendors to enterprise teams — Tiawa adapts to your needs.
+              From street-side vendors to enterprise teams — tiawa.co adapts to your needs.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -229,7 +229,7 @@ export default function HomePage() {
             <div className="relative">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to grow smarter?</h2>
               <p className="text-lg mb-8" style={{ color: '#9ca3af' }}>
-                Join thousands of businesses using Tiawa to track, optimise and grow their audience across the glob.
+                Join thousands of businesses using tiawa.co to track, optimise and grow their audience across the glob.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link

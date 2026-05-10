@@ -8,6 +8,7 @@ import AppLogo from '../ui/AppLogo';
 const navLinks = [
   { href: '/#features', label: 'Features' },
   { href: '/#how-it-works', label: 'How it works' },
+  { href: '/developers', label: 'Developers', internal: true },
 ];
 
 export default function Navbar() {
@@ -26,15 +27,25 @@ export default function Navbar() {
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="text-sm text-gray-400 hover:text-white transition-colors"
-              >
-                {l.label}
-              </a>
-            ))}
+            {navLinks.map((l) =>
+              l.internal ? (
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  {l.label}
+                </Link>
+              ) : (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  className="text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  {l.label}
+                </a>
+              )
+            )}
           </div>
 
           {/* Auth area */}
@@ -95,16 +106,27 @@ export default function Navbar() {
           className="md:hidden px-4 pb-4 space-y-3"
           style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
         >
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="block text-sm text-gray-400 hover:text-white py-2"
-              onClick={() => setMenuOpen(false)}
-            >
-              {l.label}
-            </a>
-          ))}
+          {navLinks.map((l) =>
+            l.internal ? (
+              <Link
+                key={l.href}
+                to={l.href}
+                className="block text-sm text-gray-400 hover:text-white py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                {l.label}
+              </Link>
+            ) : (
+              <a
+                key={l.href}
+                href={l.href}
+                className="block text-sm text-gray-400 hover:text-white py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                {l.label}
+              </a>
+            )
+          )}
           {user ? (
             <>
               <Link

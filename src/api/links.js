@@ -7,10 +7,19 @@ import apiClient from './client';
  * Response: { data: { short_url, short_path } }
  */
 export const shortenUrl = async ({ url, customAlias = '' }) => {
-  const { data } = await apiClient.post('/requests/create', {
-    url,
-    short_path: customAlias,
-  });
+  const payload = { url };
+  // Only send short_path when the user actually provided one — the API
+  // rejects an empty string and will return status:"Failed" with code 205.
+  if (customAlias) payload.short_path = customAlias;
+
+  const { data } = await apiClient.post('/requests/create', payload);
+
+  // The API can return HTTP 200 with a business-logic failure in the body.
+  if (data?.status === 'Failed') {
+    const msg = data.reason || 'Link creation failed.';
+    throw Object.assign(new Error(msg), { apiStatus: data.status_code });
+  }
+
   // API wraps payload in a `data` key
   return data.data ?? data;
 };

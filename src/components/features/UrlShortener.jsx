@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link2, Copy, Check, Download, ExternalLink } from 'lucide-react';
+import { Link2, Pencil, Copy, Check, Download, ExternalLink } from 'lucide-react';
 import QRCode from 'qrcode';
 
 import { copyToClipboard } from '../../lib/utils';
@@ -9,11 +9,14 @@ import { shortenUrl } from '../../api/links';
 
 export default function UrlShortener() {
   const [url, setUrl] = useState('');
+  const [customPath, setCustomPath] = useState('');
+  const [customPathError, setCustomPathError] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [customFocused, setCustomFocused] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState(null);
 
   // Generate QR code as a PNG data URL whenever a new result arrives
@@ -29,15 +32,32 @@ export default function UrlShortener() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    // Validate custom path if provided
+    if (customPath) {
+      if (customPath.length < 5 || customPath.length > 16) {
+        setCustomPathError('Custom path must be between 5 and 16 characters.');
+        return;
+      }
+      if (!/^[a-zA-Z0-9_-]+$/.test(customPath)) {
+        setCustomPathError('Only letters, numbers, hyphens and underscores allowed.');
+        return;
+      }
+    }
+
     setLoading(true);
     setResult(null);
     setError(null);
+    setCustomPathError('');
     try {
-      const data = await shortenUrl({ url });
+      const data = await shortenUrl({ url, customAlias: customPath });
       setResult(data);
     } catch (err) {
       setError(
-        err.response?.data?.message || 'Something went wrong. Please try again.',
+        err.response?.data?.reason ||
+        err.response?.data?.message ||
+        err.message ||
+        'Something went wrong. Please try again.',
       );
     } finally {
       setLoading(false);
@@ -52,30 +72,63 @@ export default function UrlShortener() {
 
   return (
     <div className="max-w-3xl mx-auto w-full">
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-        <div className="flex-1 relative">
-          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-            <Link2 size={20} style={{ color: '#9ca3af' }} />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        {/* Long URL input row */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex-1 relative">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <Link2 size={20} style={{ color: '#9ca3af' }} />
+            </div>
+            <input
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="Paste your long URL here..."
+              required
+              className="w-full pl-12 pr-4 py-4 rounded-xl text-white placeholder-gray-500 text-base transition-colors focus:outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: `1px solid ${focused ? 'rgba(124,58,237,0.7)' : 'rgba(255,255,255,0.1)'}`,
+                fontFamily: "'Inter', sans-serif",
+              }}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+            />
           </div>
-          <input
-            type="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="Paste your long URL here..."
-            required
-            className="w-full pl-12 pr-4 py-4 rounded-xl text-white placeholder-gray-500 text-base transition-colors focus:outline-none"
-            style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: `1px solid ${focused ? 'rgba(124,58,237,0.7)' : 'rgba(255,255,255,0.1)'}`,
-              fontFamily: "'Inter', sans-serif",
-            }}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-          />
+          <Button type="submit" loading={loading} size="lg">
+            {loading ? 'Shortening...' : 'Shorten for free'}
+          </Button>
         </div>
-        <Button type="submit" loading={loading} size="lg">
-          {loading ? 'Shortening...' : 'Shorten for free'}
-        </Button>
+
+        {/* Custom path row */}
+        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+          <div className="relative flex-1">
+            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+              <Pencil size={16} style={{ color: '#9ca3af' }} />
+            </div>
+            <input
+              type="text"
+              value={customPath}
+              onChange={(e) => { setCustomPath(e.target.value.replace(/\s/g, '')); setCustomPathError(''); }}
+              placeholder="Custom short path (optional, 5–16 chars)  e.g. my-brand"
+              maxLength={16}
+              className="w-full pl-10 pr-4 py-3 rounded-xl text-white placeholder-gray-600 text-sm transition-colors focus:outline-none"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: `1px solid ${customFocused ? 'rgba(251,146,60,0.6)' : 'rgba(255,255,255,0.07)'}`,
+                fontFamily: "'Inter', sans-serif",
+              }}
+              onFocus={() => setCustomFocused(true)}
+              onBlur={() => setCustomFocused(false)}
+            />
+          </div>
+          <span className="text-xs whitespace-nowrap" style={{ color: '#6b7280' }}>
+            tiawa.co/<span style={{ color: customPath ? '#fb923c' : '#4b5563' }}>{customPath || 'xxxxxx'}</span>
+          </span>
+        </div>
+        {customPathError && (
+          <p className="text-xs" style={{ color: '#f87171' }}>{customPathError}</p>
+        )}
       </form>
 
       {/* Error */}

@@ -45,7 +45,7 @@ export default function LoginPage() {
           style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)' }}
         >
           <h2 className="text-2xl font-bold text-white mb-2">Welcome back</h2>
-          <p className="text-sm text-gray-500 mb-8">Sign in to your Tiawa account</p>
+          <p className="text-sm text-gray-500 mb-8">Sign in to your Tiawa.co account</p>
 
           {error && (
             <div
